@@ -17,6 +17,19 @@ start_port = args.start_port
 end_port = args.end_port
 output_file = args.output
 
+# Input validation
+if start_port < 1 or end_port > 65535:
+    print("[-] Error: Ports must be between 1 and 65535.")
+    exit(1)
+
+if start_port > end_port:
+    print("[-] Error: Start port cannot be greater than end port.")
+    exit(1)
+
+if not target.strip():
+    print("[-] Error: Target cannot be empty.")
+    exit(1)
+
 print(f"\nStarting scan on {target}")
 print(f"Scanning ports {start_port}-{end_port}")
 print(f"Scan started at: {datetime.now()}\n")

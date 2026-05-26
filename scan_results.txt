@@ -1,6 +1,6 @@
 Scan Results for 127.0.0.1
 Ports scanned: 1-1024
-Scan time: 2026-05-26 15:55:35.907068
+Scan time: 2026-05-26 16:01:42.914504
 
 Open ports found:
 - 445: SMB | Banner: No banner
