@@ -51,8 +51,22 @@ def scan_port(port):
 
         if result == 0:
             service = COMMON_SERVICES.get(port, "Unknown")
-            print(f"[+] Port {port} OPEN ({service})")
-            open_ports.append((port, service))
+
+            banner = ""
+
+            try:
+                sock.send(b"HELLO\r\n")
+                banner = sock.recv(1024).decode(errors="ignore").strip()
+
+                if not banner:
+                    banner = "No banner"
+
+            except:
+                banner = "No banner"
+
+            print(f"[+] Port {port} OPEN ({service}) | Banner: {banner}")
+
+            open_ports.append((port, service, banner))
 
         sock.close()
 
@@ -84,8 +98,8 @@ with open(filename, "w") as file:
 
         print("\nOpen ports found:")
 
-        for port, service in open_ports:
-            result_line = f"- {port}: {service}"
+        for port, service, banner in open_ports:
+            result_line = f"- {port}: {service} | Banner: {banner}"
 
             print(result_line)
             file.write(result_line + "\n")
