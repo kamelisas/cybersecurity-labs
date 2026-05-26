@@ -1,0 +1,10 @@
+Scan Results for 127.0.0.1
+Ports scanned: 1-4000
+Scan time: 2026-05-26 15:53:55.768226
+
+Open ports found:
+- 135: RPC
+- 445: SMB
+- 1521: Oracle Database
+- 1883: MQTT
+- 3306: MySQL

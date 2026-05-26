@@ -1,0 +1,7 @@
+Scan Results for 127.0.0.1
+Ports scanned: 1-1024
+Scan time: 2026-05-26 15:53:46.152855
+
+Open ports found:
+- 135: RPC
+- 445: SMB

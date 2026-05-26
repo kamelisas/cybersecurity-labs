@@ -8,12 +8,14 @@ parser = argparse.ArgumentParser(description="Threaded Python Port Scanner")
 parser.add_argument("--target", required=True, help="Target IP address")
 parser.add_argument("--start-port", type=int, default=1, help="Starting port")
 parser.add_argument("--end-port", type=int, default=1024, help="Ending port")
+parser.add_argument("--output", default="scan_results.txt", help="Output file name")
 
 args = parser.parse_args()
 
 target = args.target
 start_port = args.start_port
 end_port = args.end_port
+output_file = args.output
 
 print(f"\nStarting scan on {target}")
 print(f"Scanning ports {start_port}-{end_port}")
@@ -33,11 +35,10 @@ COMMON_SERVICES = {
     143: "IMAP",
     443: "HTTPS",
     445: "SMB",
-    3306: "MySQL",
-    3389: "RDP",
     1521: "Oracle Database",
-   1883: "MQTT",
-   3306: "MySQL",
+    1883: "MQTT",
+    3306: "MySQL",
+    3389: "RDP"
 }
 
 
@@ -71,9 +72,26 @@ for thread in threads:
 
 print("\nScan finished.")
 
-if open_ports:
-    print("\nOpen ports found:")
-    for port, service in open_ports:
-        print(f"- {port}: {service}")
-else:
-    print("\nNo open ports found.")
+filename = output_file
+
+with open(filename, "w") as file:
+    file.write(f"Scan Results for {target}\n")
+    file.write(f"Ports scanned: {start_port}-{end_port}\n")
+    file.write(f"Scan time: {datetime.now()}\n\n")
+
+    if open_ports:
+        file.write("Open ports found:\n")
+
+        print("\nOpen ports found:")
+
+        for port, service in open_ports:
+            result_line = f"- {port}: {service}"
+
+            print(result_line)
+            file.write(result_line + "\n")
+
+    else:
+        print("\nNo open ports found.")
+        file.write("No open ports found.\n")
+
+print(f"\nResults saved to {filename}")
